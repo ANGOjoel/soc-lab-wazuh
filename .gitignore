@@ -1,0 +1,11 @@
+# Dépôt Wazuh officiel cloné (référence externe, pas notre code)
+wazuh-docker/
+
+# Certificats générés (sensibles, ne jamais committer)
+**/certs/
+**/*.pem
+**/*.key
+
+# Fichiers système
+.DS_Store
+*.log
