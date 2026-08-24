@@ -1,0 +1,8 @@
+test123
+password
+admin123
+root123
+qwerty123
+letmein
+azerty1
+passw0rd
