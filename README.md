@@ -27,11 +27,11 @@ Projet d'apprentissage : déploiement d'une stack SIEM Wazuh, détection d'incid
 
 ## Règles de détection
 
-| Rule ID | Déclencheur | Sévérité | Type |
-|---|---|---|---|
-| 100100 | Connexion FTP suivie d'un changement de port dans les 15s (backdoor vsftpd) | 12 | Custom |
-| 5760 | Échec d'authentification SSH (mot de passe invalide) | 5 | Native |
-| 5763 | 8 échecs SSH en 120s depuis la même IP (brute force) | 10 | Native |
+| Rule ID | Déclencheur | Sévérité | Type | Constat Jour 3 comblé |
+|---|---|---|---|---|
+| 100100 | Connexion FTP suivie d'un changement de port dans les 15s (backdoor vsftpd) | 12 | Custom | Scénario 3 : signaux faibles non corrélés (FTP + port) |
+| 5760 | Échec d'authentification SSH (mot de passe invalide) | 5 | Native | — |
+| 5763 | 8 échecs SSH en 120s depuis la même IP (brute force) | 10 | Native | Scénario 2 : échecs individuels non corrélés en alerte unique |
 
 Contrairement à la règle vsftpd (nécessitant une règle composite custom), le brute force SSH est déjà couvert nativement par la règle 5763 de Wazuh (frequency=8, timeframe=120s, same_source_ip). Après vérification via wazuh-logtest, cette règle native remplit exactement le besoin — écrire une règle custom redondante n'aurait apporté aucune valeur.# SOC Lab — Wazuh SIEM
 

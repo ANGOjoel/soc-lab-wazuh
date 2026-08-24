@@ -18,7 +18,7 @@ nmap -sV -sC -p- 192.168.56.101 -oN nmap-full.txt
 hydra -l msfadmin -P wordlist-courte.txt ssh://192.168.56.101
 **Résultat côté attaquant :** mot de passe trouvé (msfadmin/msfadmin) après quelques tentatives.
 
-**Détection côté Wazuh :** détecté clairement. Règle 5760 ("sshd: authentication failed"), niveau 5, déclenchée à chaque tentative échouée. Le tableau de bord montre une hausse nette du nombre d'alertes (+13), catégorisées "Password Guessing" dans le mapping MITRE ATT&CK.
+**Détection côté Wazuh :** Détection côté Wazuh : détecté clairement. Règle 5760 ("sshd: authentication failed"), niveau 5, déclenchée à chaque tentative échouée. Règle 5551 ("PAM: Multiple failed logins in a small period"), niveau 9, également déclenchée en parallèle. Le tableau de bord montre une hausse nette du nombre d'alertes (+13), catégorisées "Password Guessing" dans le mapping MITRE ATT&CK.
 
 **Limite identifiée :** chaque échec est loggé individuellement, mais aucune règle par défaut ne corrèle plusieurs échecs rapprochés en une alerte "brute force en cours" de sévérité élevée. Cela justifie la règle personnalisée du Jour 4 (seuil de fréquence : 5 échecs en 120 secondes).
 
